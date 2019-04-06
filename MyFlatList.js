@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Text, Platform } from 'react-native';
+import { View, StyleSheet, FlatList, Text, Platform, Button, TextInput } from 'react-native';
 import { Constants } from 'expo';
 
 // Other useful components: https://facebook.github.io/react-native/docs/components-and-apis
 
 export default class MyFlatList extends Component {
     state = {
+        count: 100,
         items: new Array(100).fill(0).map((a, i) => i).map(i => ({
             title: `Title ${i}`,
             key: i,
@@ -14,24 +15,47 @@ export default class MyFlatList extends Component {
         })),
     };
 
-    _keyExtractor = (item, index) => item.key.toString();
+    _keyExtractor = item => item.key.toString();
 
-    componentDidMount() {
+    buttonPressed = () => {
+        let newItems = this.state.items.slice().reverse().concat({
+            title: "Title " + this.state.count,
+            key: Math.floor(Math.random() * 10000),
+            content: this.state.text,
+            randColor: Platform.select({ ios: '#' + Math.floor(Math.random() * 16777215).toString(16), default: 'pink' })
+        })
+        newItems.reverse()
+        this.setState({
+            count: this.state.count + 1,
+            items: newItems,
+            text: ''
+        })
+
     }
 
     render() {
         return (
             <View style={styles.container} >
+                <View style={{ alignSelf: 'stretch' }}>
+                    <Text>Total: {this.state.count} | New: {this.state.text}</Text>
+                    <TextInput
+                        style={{
+                            height: 20, color: 'chartreuse', borderWidth: 1
+                        }}
+                        onChangeText={(text) => this.setState({ text })}
+                        value={this.state.text}
+                    />
+                    <Button title="Add note" onPress={this.buttonPressed} />
+                </View>
                 <FlatList keyExtractor={this._keyExtractor} data={this.state.items} renderItem={this.renderItem} />
             </View>
         )
     }
 
     renderItem = ({ item }) => {
-
         return (
             <View style={styles.item} style={{ backgroundColor: item.randColor }}>
-                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.title}>{item.title} </Text>
                 <Text style={styles.content}>{item.content}</Text>
             </View>
         );
@@ -47,14 +71,14 @@ const styles = StyleSheet.create({
         padding: 0,
         margin: 0,
         paddingTop: Constants.statusBarHeight,
-        backgroundColor: 'chartreuse',
+        backgroundColor: 'darkslategrey'
     },
     item: {
         paddingHorizontal: 10,
     },
     title: {
         fontWeight: 'bold',
-        marginVertical: 5,
+        marginVertical: 7,
     },
     content: {
         marginBottom: 10,
