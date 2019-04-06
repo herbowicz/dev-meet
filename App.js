@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, Button } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import MyFlatList from './MyFlatList'
-import MyIcons from './MyIcons'
+import MyFlatList from './MyFlatList';
+import MyIcons from './MyIcons';
+import MyMap from './MyMap';
 
 class HomeScreen extends Component {
     static navigationOptions = {
@@ -28,6 +29,8 @@ class HomeScreen extends Component {
                     onPress={() => this.props.navigation.navigate('MyFlatList', MyFlatList)} />
                 <Button key="MyIcons" title="MyIcons"
                     onPress={() => this.props.navigation.navigate('MyIcons', MyIcons)} />
+                <Button key="MyMap" title="MyMap"
+                    onPress={() => this.props.navigation.navigate('MyMap', MyMap)} />
             </View>
         );
     }
@@ -51,7 +54,8 @@ const Navigator = createStackNavigator(
         },
         Item: ItemScreen,
         MyFlatList,
-        MyIcons
+        MyIcons,
+        MyMap
     },
     {
         initialRouteName: 'Home',
