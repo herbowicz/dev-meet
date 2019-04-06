@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Text } from 'react-native';
+import { View, StyleSheet, FlatList, Text, Platform } from 'react-native';
 import { Constants } from 'expo';
 
 // Other useful components: https://facebook.github.io/react-native/docs/components-and-apis
@@ -10,7 +10,7 @@ export default class MyFlatList extends Component {
             title: `Title ${i}`,
             key: i,
             content: `Content number ${i}. It's a bit longer than title. It's even long enough to force a line break`,
-            randColor: '#' + Math.floor(Math.random() * 16777215).toString(16)
+            randColor: Platform.select({ ios: '#' + Math.floor(Math.random() * 16777215).toString(16), default: 'pink' })
         })),
     };
 
@@ -28,6 +28,7 @@ export default class MyFlatList extends Component {
     }
 
     renderItem = ({ item }) => {
+
         return (
             <View style={styles.item} style={{ backgroundColor: item.randColor }}>
                 <Text style={styles.title}>{item.title}</Text>
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
         padding: 0,
         margin: 0,
         paddingTop: Constants.statusBarHeight,
-        backgroundColor: '#ecf0f1',
+        backgroundColor: 'chartreuse',
     },
     item: {
         paddingHorizontal: 10,
