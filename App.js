@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
-import MyButton from './MyButton'
+import { StyleSheet, Text, View } from 'react-native';
 import MyFlatList from './MyFlatList'
 
 export default class App extends React.Component {
@@ -8,7 +7,6 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <Text>Test!</Text>
-        {/* <MyButton /> */}
         <MyFlatList />
       </View>
     );
